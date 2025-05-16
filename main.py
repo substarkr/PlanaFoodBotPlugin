@@ -4,21 +4,16 @@ import random
 
 # 食物列表
 food = [
-    "三明治和牛奶", 
-    "豆浆油条", 
-    "燕麦粥", 
-    "煎蛋配吐司", 
-    "水果沙拉",
+    "豆浆油条",
+    "鸡蛋灌饼",
+    "皮蛋瘦肉粥",
     "牛肉面",
-    "披萨",
-    "寿司",
-    "炒饭",
-    "沙拉轻食",
-    "火锅",
-    "牛排",
-    "烤鸡",
-    "海鲜大餐",
-    "素食套餐"
+    "黄焖鸡米饭",
+    "麻辣香锅",
+    "寿司拼盘",
+    "意大利面",
+    "蔬菜沙拉",
+    "牛排套餐"
 ]
 
 """
@@ -27,61 +22,66 @@ food = [
 
 class MealRecommendPlugin(BasePlugin):
 
+    # 插件加载时触发
     def __init__(self, host: APIHost):
         pass
 
+    # 异步初始化
     async def initialize(self):
         pass
 
+    # 当收到个人消息时触发
     @handler(PersonNormalMessageReceived)
-    async def person_normal_message_received(self, ctx: EventContext):
-        msg = ctx.event.text_message.strip()
-        time_keyword = None
-        reply_template = "普拉娜建议{}吃{}哦"
+    async def person_message_handler(self, ctx: EventContext):
+        msg = ctx.event.text_message.strip()  # 去除首尾空格
         
-        if msg.startswith("早上吃什么"):
-            time_keyword = "早上"
-        elif msg.startswith("中午吃什么"):
-            time_keyword = "中午"
-        elif msg.startswith("晚上吃什么"):
-            time_keyword = "晚上"
+        if msg == "早上吃什么":
+            meal_time = "早上"
+        elif msg == "中午吃什么":
+            meal_time = "中午"
+        elif msg == "晚上吃什么":
+            meal_time = "晚上"
+        else:
+            return  # 不是询问餐食的消息，直接返回
+            
+        # 随机选择食物
+        selected_food = random.choice(food)
         
-        if time_keyword:
-            # 随机选择食物
-            selected_food = random.choice(food)
-            reply = reply_template.format(time_keyword, selected_food)
-            
-            # 输出调试信息
-            self.ap.logger.debug("推荐食物: {}".format(selected_food))
-            
-            # 回复消息
-            ctx.add_return("reply", [reply])
-            ctx.prevent_default()
+        # 输出调试信息
+        self.ap.logger.debug("推荐{}食物: {}".format(meal_time, selected_food))
+        
+        # 回复消息
+        ctx.add_return("reply", ["普拉娜建议{}吃{}哦".format(meal_time, selected_food)])
+        
+        # 阻止该事件默认行为（向接口获取回复）
+        ctx.prevent_default()
 
+    # 当收到群消息时触发
     @handler(GroupNormalMessageReceived)
-    async def group_normal_message_received(self, ctx: EventContext):
-        msg = ctx.event.text_message.strip()
-        time_keyword = None
-        reply_template = "普拉娜建议{}吃{}哦"
+    async def group_message_handler(self, ctx: EventContext):
+        msg = ctx.event.text_message.strip()  # 去除首尾空格
         
-        if msg.startswith("早上吃什么"):
-            time_keyword = "早上"
-        elif msg.startswith("中午吃什么"):
-            time_keyword = "中午"
-        elif msg.startswith("晚上吃什么"):
-            time_keyword = "晚上"
+        if msg == "早上吃什么":
+            meal_time = "早上"
+        elif msg == "中午吃什么":
+            meal_time = "中午"
+        elif msg == "晚上吃什么":
+            meal_time = "晚上"
+        else:
+            return  # 不是询问餐食的消息，直接返回
+            
+        # 随机选择食物
+        selected_food = random.choice(food)
         
-        if time_keyword:
-            # 随机选择食物
-            selected_food = random.choice(food)
-            reply = reply_template.format(time_keyword, selected_food)
-            
-            # 输出调试信息
-            self.ap.logger.debug("推荐食物: {}".format(selected_food))
-            
-            # 回复消息
-            ctx.add_return("reply", [reply])
-            ctx.prevent_default()
+        # 输出调试信息
+        self.ap.logger.debug("推荐{}食物: {}".format(meal_time, selected_food))
+        
+        # 回复消息
+        ctx.add_return("reply", ["普拉娜建议{}吃{}哦".format(meal_time, selected_food)])
+        
+        # 阻止该事件默认行为（向接口获取回复）
+        ctx.prevent_default()
 
+    # 插件卸载时触发
     def __del__(self):
         pass
