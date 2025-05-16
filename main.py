@@ -61,7 +61,7 @@ class MyPlugin(BasePlugin):
     @handler(PersonNormalMessageReceived)
     async def person_normal_message_received(self, ctx: EventContext):
         msg = ctx.event.text_message  # 这里的 event 即为 PersonNormalMessageReceived 的对象
-        if msg == "早上吃什么":  # 如果消息为hello
+        if msg == "早上吃什么" or msg == "早饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议早上吃{random.choice(food)}哦")
@@ -71,7 +71,7 @@ class MyPlugin(BasePlugin):
 
             # 阻止该事件默认行为（向接口获取回复）
             ctx.prevent_default()
-        elif msg == "中午吃什么":  # 如果消息为hello
+        elif msg == "中午吃什么" or msg == "中饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议中午吃{random.choice(food)}哦")
@@ -81,7 +81,7 @@ class MyPlugin(BasePlugin):
 
             # 阻止该事件默认行为（向接口获取回复）
             ctx.prevent_default()
-        elif msg == "晚上吃什么":  # 如果消息为hello
+        elif msg == "晚上吃什么" or msg == "晚饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议晚上吃{random.choice(food)}哦")
@@ -96,7 +96,7 @@ class MyPlugin(BasePlugin):
     @handler(GroupNormalMessageReceived)
     async def group_normal_message_received(self, ctx: EventContext):
         msg = ctx.event.text_message  # 这里的 event 即为 GroupNormalMessageReceived 的对象
-        if msg == "早上吃什么":  # 如果消息为hello
+        if msg == "早上吃什么" or msg == "早饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议早上吃{random.choice(food)}哦")
@@ -106,7 +106,7 @@ class MyPlugin(BasePlugin):
 
             # 阻止该事件默认行为（向接口获取回复）
             ctx.prevent_default()
-        elif msg == "中午吃什么":  # 如果消息为hello
+        elif msg == "中午吃什么" or msg == "中饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议中午吃{random.choice(food)}哦")
@@ -116,7 +116,7 @@ class MyPlugin(BasePlugin):
 
             # 阻止该事件默认行为（向接口获取回复）
             ctx.prevent_default()
-        elif msg == "晚上吃什么":  # 如果消息为hello
+        elif msg == "晚上吃什么" or msg == "晚饭吃什么":  
 
             # 输出调试信息
             self.ap.logger.debug(f"普拉娜建议晚上吃{random.choice(food)}哦")
